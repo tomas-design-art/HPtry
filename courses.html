@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コース一覧 | ◯◯接骨院</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-leaf"></i> ◯◯接骨院
+            </a>
+            <nav class="nav-links">
+                <a href="index.html">ホーム</a>
+                <a href="index.html#worries">お悩み</a>
+                <a href="courses.html">コース一覧</a>
+                <a href="index.html#access">アクセス</a>
+            </nav>
+            <a href="#" class="btn btn-primary reserve-btn js-reserve-link" target="_blank" rel="noopener noreferrer">
+                <i class="fa-regular fa-calendar-check"></i> Web予約
+            </a>
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" id="mobileMenuBtn" aria-label="メニューを開く">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div style="background: var(--bg-color); padding: 120px 0 60px;">
+            <div class="container">
+                <h1 class="section-title" style="margin-bottom: 1rem;">当院のコース案内</h1>
+                <p class="text-center" style="color: var(--text-light); margin-bottom: 3rem;">
+                    お一人おひとりの症状や体質に合わせ、最適な施術を提供いたします。<br>
+                    どのコースが良いかわからない場合は、チャットコンシェルジュまたは当日ご相談ください。
+                </p>
+            </div>
+        </div>
+
+        <section class="section-padding courses-section">
+            <div class="container">
+                
+                <!-- 全身骨格矯正コース -->
+                <div id="course-bone" class="course-card">
+                    <img src="static/images/course_bone.jpg" alt="全身骨格矯正コース" class="course-img" onerror="this.src='https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=800&auto=format&fit=crop'">
+                    <div class="course-body">
+                        <span class="course-tag">根本治療</span>
+                        <h3 class="course-title">全身骨格矯正コース</h3>
+                        <p class="course-desc">
+                            体の土台である骨盤から背骨、首までのゆがみを整え、痛みの根本原因にアプローチします。
+                            長年の腰痛や肩こり、姿勢の悪さが気になる方におすすめの当院一番人気のコースです。
+                            ボキボキしない優しい施術も可能ですので、初めての方もご安心ください。
+                        </p>
+                        <p style="font-weight: bold; font-size: 1.2rem; color: var(--primary-color); margin-bottom: 20px;">¥5,500 <span style="font-size: 0.8rem; color: var(--text-light); font-weight: normal;">(税込 / 約45分)</span></p>
+                        <div style="display: flex; gap: 15px;">
+                            <a href="#" class="btn btn-secondary js-reserve-link" target="_blank"><i class="fa-regular fa-calendar-check"></i> このコースを予約</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- マッサージ・筋膜リリースコース -->
+                <div id="course-massage" class="course-card reverse">
+                    <img src="static/images/course_massage.jpg" alt="マッサージ・筋膜リリースコース" class="course-img" onerror="this.src='https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=800&auto=format&fit=crop'">
+                    <div class="course-body">
+                        <span class="course-tag">疲労回復</span>
+                        <h3 class="course-title">深層マッサージ・筋膜リリースコース</h3>
+                        <p class="course-desc">
+                            表面だけでなく、深層の筋肉や癒着した筋膜にアプローチし、血流とリンパの巡りを改善します。
+                            スポーツ後のケアや、慢性的な疲労感、だるさを我慢している方に最適です。終わった後の体の軽さを実感していただけます。
+                        </p>
+                        <p style="font-weight: bold; font-size: 1.2rem; color: var(--primary-color); margin-bottom: 20px;">¥4,400 <span style="font-size: 0.8rem; color: var(--text-light); font-weight: normal;">(税込 / 約40分)</span></p>
+                        <div style="display: flex; gap: 15px;">
+                            <a href="#" class="btn btn-secondary js-reserve-link" target="_blank"><i class="fa-regular fa-calendar-check"></i> このコースを予約</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ヘッドスパ・自律神経調整コース -->
+                <div id="course-head" class="course-card">
+                    <img src="static/images/course_head.jpg" alt="ヘッドスパ・自律神経調整コース" class="course-img" onerror="this.src='https://images.unsplash.com/photo-1620708518650-cfb742512f71?q=80&w=800&auto=format&fit=crop'">
+                    <div class="course-body">
+                        <span class="course-tag">リラックス</span>
+                        <h3 class="course-title">ドライヘッドスパ・自律神経調整コース</h3>
+                        <p class="course-desc">
+                            頭皮や顔から首回りの硬直を解きほぐし、脳の疲労を取り除きます。
+                            パソコンやスマホの見すぎによる眼精疲労、頭痛、不眠や自律神経の乱れでお悩みの方へ。リラックス効果が非常に高く、施術中に眠ってしまう方も多いコースです。
+                        </p>
+                        <p style="font-weight: bold; font-size: 1.2rem; color: var(--primary-color); margin-bottom: 20px;">¥3,800 <span style="font-size: 0.8rem; color: var(--text-light); font-weight: normal;">(税込 / 約30分)</span></p>
+                        <div style="display: flex; gap: 15px;">
+                            <a href="#" class="btn btn-secondary js-reserve-link" target="_blank"><i class="fa-regular fa-calendar-check"></i> このコースを予約</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-info">
+                <h3 class="footer-logo"><i class="fa-solid fa-leaf"></i> ◯◯接骨院</h3>
+                <p id="footer-address">〒XXX-XXXX 住所を読み込み中...</p>
+                <div class="contact-methods">
+                    <p class="tel"><i class="fa-solid fa-phone"></i> 03-XXXX-XXXX</p>
+                    <p class="contact-note">※施術中は電話に出られない場合がございます。Web予約またはチャットをご利用ください。</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">ホーム</a>
+                <a href="courses.html">コース一覧</a>
+                <a href="#" class="js-reserve-link" target="_blank" rel="noopener noreferrer">Web予約（24時間受付）</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ◯◯接骨院. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Chatbot Floating Button -->
+    <button class="chat-toggle-btn" id="chatToggleBtn">
+        <div class="chat-badge">1</div>
+        <i class="fa-regular fa-comments"></i>
+        <span>ご相談・予約はこちら</span>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window glass-panel" id="chatbotWindow">
+        <div class="chat-header">
+            <h4><i class="fa-solid fa-robot"></i> AIコンシェルジュ</h4>
+            <button class="close-chat" id="closeChatBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-message bot-message">
+                <div class="avatar"><i class="fa-solid fa-leaf"></i></div>
+                <div class="bubble">
+                    こんにちは！◯◯接骨院です。<br>
+                    どのようなお悩みでしょうか？<br>
+                    該当する症状やご希望を選択してください。
+                </div>
+            </div>
+            <div class="chat-options" id="chatOptions">
+                <!-- JavaScriptで選択肢を動的に生成します -->
+            </div>
+        </div>
+        <div class="chat-footer">
+            <a href="#" class="btn btn-primary btn-block js-reserve-link" target="_blank">
+                <i class="fa-regular fa-calendar-check"></i> すぐにWeb予約する
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="static/js/main.js"></script>
+</body>
+</html>

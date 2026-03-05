@@ -1,7 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. Navbar Scroll Effect ---
+    // --- 0. 設定のハードコーディング (静的サイト用) ---
+    // ここで直接予約URLと住所を管理します。変更する場合は以下の値を書き換えてください。
+    const appConfig = {
+        address: "東京都新宿区西新宿2-8-1",
+        reservationUrl: "https://example.com/reserve" // ※ここに実際の予約アプリのURLを入れます
+    };
+
+    // すべての予約ボタンのリンク先を appConfig.reservationUrl に一括設定
+    const reserveLinks = document.querySelectorAll('.js-reserve-link');
+    reserveLinks.forEach(link => {
+        link.href = appConfig.reservationUrl;
+    });
+
+    // --- 1. Navbar Scroll Effect & Mobile Menu ---
     const navbar = document.querySelector('.navbar');
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.querySelector('.nav-links');
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -9,6 +25,35 @@ document.addEventListener('DOMContentLoaded', () => {
             navbar.classList.remove('scrolled');
         }
     });
+
+    // ハンバーガーメニューのトグル
+    if(mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if(navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // スマホメニューでリンクをクリックしたらメニューを閉じる
+    if(navLinks) {
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if(window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+    }
 
     // --- 2. Chatbot Logic ---
     const chatToggleBtn = document.getElementById('chatToggleBtn');
@@ -22,20 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleChat = () => {
         chatbotWindow.classList.toggle('active');
         if (chatbotWindow.classList.contains('active')) {
-            badge.style.display = 'none'; // バッジを消す
+            if(badge) badge.style.display = 'none'; // バッジを消す
             if(chatOptions.children.length === 0) {
                 showInitialOptions();
             }
         }
     };
 
-    chatToggleBtn.addEventListener('click', toggleChat);
-    closeChatBtn.addEventListener('click', () => {
+    if(chatToggleBtn) chatToggleBtn.addEventListener('click', toggleChat);
+    if(closeChatBtn) closeChatBtn.addEventListener('click', () => {
         chatbotWindow.classList.remove('active');
     });
 
-    // チャットの選択肢と返答ロジック
-    // 電話を減らしWeb予約に誘導するための「1次対応」の設計
     const qaFlow = {
         initial: [
             { text: "ひどい肩こりや腰痛がある", next: "pain" },
@@ -90,17 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
         msgDiv.appendChild(avatar);
         msgDiv.appendChild(bubble);
         
-        // 追加前にoptionsを消す（順番の管理として一番下にoptionsを置くため）
         chatBody.insertBefore(msgDiv, chatOptions);
         
-        // 自動スクロール
         setTimeout(() => {
             chatBody.scrollTop = chatBody.scrollHeight;
         }, 100);
     }
 
     function renderOptions(optionsArray) {
-        chatOptions.innerHTML = ''; // クリア
+        chatOptions.innerHTML = ''; 
         optionsArray.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'chat-option-btn';
@@ -118,27 +159,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleOptionClick(opt) {
-        // ユーザーの選択をメッセージとして表示
         appendMessage(opt.text, true);
-        chatOptions.innerHTML = ''; // 一旦選択肢を消す
+        chatOptions.innerHTML = ''; 
 
-        // 少し遅延させてボットの返答を演出
         setTimeout(() => {
             if (opt.action) {
-                // アクションの実行（リンク遷移など）
                 if (opt.action === 'reserve') {
                     appendMessage('ありがとうございます！別ウィンドウで予約画面を開きます。');
-                    window.open(window.appConfig.reservationUrl, '_blank');
+                    window.open(appConfig.reservationUrl, '_blank');
                     setTimeout(() => renderOptions([{text:"最初に戻る", next:"initial"}]), 1000);
                 } else if (opt.action === 'link_bone') {
-                    window.location.href = '/courses#course-bone';
+                    window.location.href = 'courses.html#course-bone';
                     chatbotWindow.classList.remove('active');
                 } else if (opt.action === 'link_massage') {
-                    window.location.href = '/courses#course-massage';
+                    window.location.href = 'courses.html#course-massage';
                     chatbotWindow.classList.remove('active');
                 }
             } else if (opt.next) {
-                // 次のフローに進む
                 if (opt.next === 'initial') {
                     appendMessage('他に気になることはありますか？');
                     showInitialOptions();
@@ -153,15 +190,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 3. Dynamic Map Generation (Leaflet + Nominatim API) ---
     const mapContainer = document.getElementById('map');
-    if (mapContainer && window.appConfig.address) {
+    if (mapContainer && appConfig.address) {
         
-        // フッターの住所も更新
+        // 住所のテキスト表示を更新
+        const displayAddressText = document.getElementById('display-address');
+        if(displayAddressText) displayAddressText.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${appConfig.address}`;
+        
         const footerAddress = document.getElementById('footer-address');
-        if(footerAddress) footerAddress.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${window.appConfig.address}`;
+        if(footerAddress) footerAddress.innerHTML = `〒XXX-XXXX ${appConfig.address}`;
 
-        const address = window.appConfig.address;
-        
-        // Nominatim API で座標を取得する (URLエンコード)
+        const address = appConfig.address;
         const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
 
         fetch(geocodeUrl)
@@ -171,18 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     const lat = parseFloat(data[0].lat);
                     const lon = parseFloat(data[0].lon);
                     
-                    // コンテナをクリア
                     mapContainer.innerHTML = '';
                     
-                    // Leaflet マップの初期化
                     const map = L.map('map').setView([lat, lon], 16);
                     
-                    // OSMタイルレイヤーの追加
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     }).addTo(map);
 
-                    // カスタムアイコン（オプションですがモダンに見せるために）
                     const customIcon = L.divIcon({
                         className: 'custom-pin',
                         html: '<i class="fa-solid fa-location-dot fa-2x" style="color:var(--secondary-color); text-shadow: 0 2px 4px rgba(0,0,0,0.3);"></i>',
@@ -190,18 +224,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         iconAnchor: [15, 42]
                     });
 
-                    // マーカーの追加
                     L.marker([lat, lon], {icon: customIcon}).addTo(map)
                         .bindPopup(`<b>◯◯接骨院</b><br>${address}`)
                         .openPopup();
                         
                 } else {
-                    mapContainer.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100%;">マップ情報の取得に失敗しました。<br>正しい住所が設定されているかご確認ください。</div>';
+                    mapContainer.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100%; padding:20px; text-align:center;">マップ情報の取得に失敗しました。<br>正しい住所が設定されているかご確認ください。</div>';
                 }
             })
             .catch(error => {
                 console.error("Geocoding Error: ", error);
-                mapContainer.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100%;">マップを読み込めませんでした。<br>インターネット接続をご確認ください。</div>';
+                mapContainer.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100%; padding:20px; text-align:center;">マップを読み込めませんでした。<br>インターネット接続をご確認ください。</div>';
             });
     }
 
