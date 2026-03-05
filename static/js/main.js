@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 0. 設定のハードコーディング (静的サイト用) ---
     // ここで直接予約URLと住所を管理します。変更する場合は以下の値を書き換えてください。
     const appConfig = {
-        address: "東京都新宿区西新宿2-8-1",
+        address: "東京都品川区戸越４－５－９",
         reservationUrl: "https://example.com/reserve" // ※ここに実際の予約アプリのURLを入れます
     };
 
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
 
                     L.marker([lat, lon], {icon: customIcon}).addTo(map)
-                        .bindPopup(`<b>◯◯接骨院</b><br>${address}`)
+                        .bindPopup(`<b>coco整骨院</b><br>${address}`)
                         .openPopup();
                         
                 } else {
