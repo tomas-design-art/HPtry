@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}◯◯接骨院{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- FontAwesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="navbar">
+      <div class="container navbar-container">
+        <a href="{{ url_for('index') }}" class="logo">
+          <i class="fa-solid fa-leaf"></i> ◯◯接骨院
+        </a>
+        <nav class="nav-links">
+          <a href="{{ url_for('index') }}">ホーム</a>
+          <a href="{{ url_for('index') }}#worries">お悩み</a>
+          <a href="{{ url_for('courses') }}">コース一覧</a>
+          <a href="{{ url_for('index') }}#access">アクセス</a>
+        </nav>
+        <a
+          href="{{ config.reservation_url }}"
+          class="btn btn-primary reserve-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fa-regular fa-calendar-check"></i> Web予約
+        </a>
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" aria-label="メニューを開く">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-content">
+        <div class="footer-info">
+          <h3 class="footer-logo"><i class="fa-solid fa-leaf"></i> ◯◯接骨院</h3>
+          <p id="footer-address">〒XXX-XXXX 設定から住所を読み込みます...</p>
+          <div class="contact-methods">
+            <p class="tel"><i class="fa-solid fa-phone"></i> 03-XXXX-XXXX</p>
+            <p class="contact-note">
+              ※施術中は電話に出られない場合がございます。Web予約またはチャットをご利用ください。
+            </p>
+          </div>
+        </div>
+        <div class="footer-links">
+          <a href="{{ url_for('index') }}">ホーム</a>
+          <a href="{{ url_for('courses') }}">コース一覧</a>
+          <a
+            href="{{ config.reservation_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Web予約（24時間受付）</a
+          >
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 ◯◯接骨院. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Chatbot Floating Button -->
+    <button class="chat-toggle-btn" id="chatToggleBtn">
+      <div class="chat-badge">1</div>
+      <i class="fa-regular fa-comments"></i>
+      <span>ご相談・Web予約はこちら</span>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window glass-panel" id="chatbotWindow">
+      <div class="chat-header">
+        <h4><i class="fa-solid fa-robot"></i> AIコンシェルジュ</h4>
+        <button class="close-chat" id="closeChatBtn">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-message bot-message">
+          <div class="avatar"><i class="fa-solid fa-leaf"></i></div>
+          <div class="bubble">
+            こんにちは！◯◯接骨院です。<br />
+            どのようなお悩みでしょうか？<br />
+            該当する症状やご希望を選択してください。
+          </div>
+        </div>
+        <div class="chat-options" id="chatOptions">
+          <!-- JavaScriptで選択肢を動的に生成します -->
+        </div>
+      </div>
+      <!-- ユーザーの入力などは今回選択形式メインとするためフォームは不要だが将来拡張用に確保 -->
+      <div class="chat-footer">
+        <a
+          href="{{ config.reservation_url }}"
+          class="btn btn-primary btn-block"
+          target="_blank"
+        >
+          <i class="fa-regular fa-calendar-check"></i> すぐにWeb予約する
+        </a>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // 設定をJSに渡す
+      window.appConfig = {
+        address: "{{ config.address }}",
+        reservationUrl: "{{ config.reservation_url }}",
+      };
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
